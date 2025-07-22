@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 2.0.0
   title: ACME Banking API
   description: |
-    **ACME Banking API** enables developers to build applications that make use of the information from resource methods implemented in the API. 
+    **ACME Banking API v2** enables developers to build applications that make use of the information from resource methods implemented in the API. 
 
     This API contains functionality that allows developers to retrieve and manipulate _customer_, _account_ and _transaction_ information.
 
