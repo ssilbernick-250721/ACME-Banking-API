@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: ACME Banking API
+  description: |
+    **ACME Banking API** enables developers to build applications that make use of the information from resource methods implemented in the API. 
+
+    This API contains functionality that allows developers to retrieve and manipulate _customer_, _account_ and _transaction_ information.
+
+    **ACME Bank** is a _multinational_ banking and financial services organization.
+
+components:
+  schemas:
+    CustomErrorMessage:
+      $ref: datatypes/CustomErrorMessage.yaml#/CustomErrorMessage
+    Customer:
+      $ref: exchange_modules/699e61d1-f986-4937-88fc-f0ab6faaac5a/banking-datatypes/1.0.0/banking-datatypes.yaml#/components/schemas/Customer
+    Account:
+      $ref: exchange_modules/699e61d1-f986-4937-88fc-f0ab6faaac5a/banking-datatypes/1.0.0/banking-datatypes.yaml#/components/schemas/Account
+    Transaction:
+      $ref: exchange_modules/699e61d1-f986-4937-88fc-f0ab6faaac5a/banking-datatypes/1.0.0/banking-datatypes.yaml#/components/schemas/Transaction
+
+  securitySchemes:
+    CustomToken:
+      $ref: components/reusableComponents.yaml#/components/securitySchemes/CustomToken
+    OAuth2:
+      $ref: components/reusableComponents.yaml#/components/securitySchemes/OAuth2  
+
+security:
+  - CustomToken: []
+
+paths: 
+  /customers:
+    get:
+      description: Retrieve all customers
+      summary: Get all cutstomers
+      security:
+        - OAuth2: []
+      parameters:
+        - in: header
+          required: false
+          description: Specify the media type of the response to be returned.
+          name: Accept
+          schema:
+            type: string
+            example: application/json OR application/xml          
+      responses:
+        "200":
+          headers:
+            Cache-Control:
+              $ref: components/headers.yaml#/components/headers/Cache-Control
+            Expires:
+              $ref: components/headers.yaml#/components/headers/Expires
+          description: OK
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+            application/xml: 
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+        "406":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse  
+        "418":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+    post:
+      description: Create a customer
+      summary: Add customer
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        "201":
+          $ref: components/reusableComponents.yaml#/components/responses/PostResponse
+        "503":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+
+  /customers/{customer_id}:
+    parameters:
+      - in: path
+        required: true
+        description: Customer ID
+        name: customer_id
+        schema:
+          type: string
+          example: 8f19cb50-3f57-4d38
+    get:
+      description: Retrieve a customer with a specific customer ID
+      summary: Get cutstomer by ID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "404":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+    patch:
+      description: Update a customer with a specific customer ID
+      summary: Update customer by ID
+      requestBody:
+        content: {}   
+      responses:
+        "204":
+          description: No Content
+        "500":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+    put:
+      description: Replace or create a customer with a specific customer ID
+      summary: Replace customer by ID
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        "200":
+          description: OK
+        "201":
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+        "500":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+    delete:
+      description: Remove a customer with a specific customer ID
+      summary: Delete customer by ID
+      responses:
+        "200":
+          description: Removed
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+
+  /customers/{customer_id}/accounts: 
+    parameters:
+      - in: path
+        required: true
+        description: Customer ID
+        name: customer_id
+        schema:
+          type: string
+          example: 8f19cb50-3f57-4d38
+    get:
+      description: Retrieve accounts for a specific customer ID
+      summary: Get accounts by cutstomer ID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+        "404":
+          $ref: components/reusableComponents.yaml#/components/responses/ErrorResponse
+
+  /accounts:
+    post:
+      responses:
+        "201":
+          description: Created
+
+  /accounts/{account_id}: 
+    get:
+      responses:
+        "200":
+          description: OK
+    put:
+      responses:
+        "200":
+          description: Replaced
+    delete:
+      responses:
+        "200":
+          description: Removed
+
+  /accounts/{account_id}/transactions: 
+    get:
+      responses:
+        "200":
+          description: OK
+
+  /transactions: 
+    post:
+      responses:
+        "201":
+          description: Created
+
+  /transactions/{transaction_id}: 
+    get:
+      responses:
+        "200":
+          description: OK

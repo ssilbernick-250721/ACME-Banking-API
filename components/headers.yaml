@@ -1,0 +1,23 @@
+components:
+  headers:
+    Cache-Control:
+      description: |
+        Activates caching and defines cache behavior through cache response directives. 
+        
+        Usually defines public or private (cacheable by proxy or not) and max-age for resource. 
+        
+        See https://tools.ietf.org/html/rfc7234#section-5.2 for more information.
+      schema:
+        type: string
+        example: private, max-age=31536000
+      required: true
+    Expires:
+      description: |
+        Sets a date in ISO 8601 format(default) from which the cached resource should no longer be considered valid. 
+        
+        If both the Expires header and max-age in the Cache-Control header are set, max-age will take precedence.
+      schema:
+        type: string
+        format: date-time
+        example: 2020-08-03T09:30:55Z
+      required: true  

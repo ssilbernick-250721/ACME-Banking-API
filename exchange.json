@@ -1,0 +1,46 @@
+{
+  "main": "acme-banking-api.yaml",
+  "name": "ACME Banking API",
+  "classifier": "oas",
+  "organizationId": "699e61d1-f986-4937-88fc-f0ab6faaac5a",
+  "descriptorVersion": "1.0.0",
+  "tags": [],
+  "apiVersion": "v1",
+  "dependencies": [
+    {
+      "scope": "design",
+      "classifier": "oas-components",
+      "packaging": "zip",
+      "groupId": "699e61d1-f986-4937-88fc-f0ab6faaac5a",
+      "assetId": "banking-datatypes",
+      "version": "1.0.0"
+    },
+    {
+      "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+      "assetId": "https-enforcement",
+      "version": "1.2.0",
+      "scope": "validation",
+      "classifier": "ruleset",
+      "packaging": "zip"
+    },
+    {
+      "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+      "assetId": "authentication-security-best-practices",
+      "version": "1.1.0",
+      "scope": "validation",
+      "classifier": "ruleset",
+      "packaging": "zip"
+    },
+    {
+      "groupId": "68ef9520-24e9-4cf2-b2f5-620025690913",
+      "assetId": "anypoint-best-practices",
+      "version": "1.6.3",
+      "scope": "validation",
+      "classifier": "ruleset",
+      "packaging": "zip"
+    }
+  ],
+  "groupId": "699e61d1-f986-4937-88fc-f0ab6faaac5a",
+  "assetId": "acme-banking-api",
+  "version": "1.0.0"
+}

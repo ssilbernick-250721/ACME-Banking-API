@@ -1,0 +1,34 @@
+components:
+  responses:
+    PostResponse:
+      description: Created
+      headers:
+        Location:
+          description: URL of the new customer
+          schema:
+            type: string
+            example: /customers/8f19cb50-3f56-4d38
+          required: true
+    
+    ErrorResponse:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CustomErrorMessage"
+  
+  securitySchemes:
+    CustomToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: This header should contain a valid security token
+
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://hostname/services/oauth2/authorize
+          tokenUrl: https://hostname/services/oauth2/token
+          scopes: {}
+      description: Apply the OAuth 2.0 security policy to resource methods for authenticating API requests.
